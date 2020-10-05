@@ -19,6 +19,10 @@ public class CategoriaService {
         return categoriaRepository.save(categoria);
     }
 
+    public void salvarTodos(List<Categoria> categorias) {
+        categoriaRepository.saveAll(categorias);
+    }
+
     public CategoriaDTO buscarPorId(String id) {
         Categoria categoria = categoriaRepository.findById(id).orElse(null);
         return CategoriaParser.toDTO(categoria);

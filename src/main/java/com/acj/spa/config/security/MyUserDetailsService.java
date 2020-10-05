@@ -1,9 +1,9 @@
-package br.com.se.config.security;
+package com.acj.spa.config.security;
 
-import br.com.se.entity.core.usuario.Usuario;
-import br.com.se.repository.core.security.PassWordRepository;
-import br.com.se.repository.core.usuario.UsuarioRepository;
-import br.com.se.service.core.UsuarioService;
+import com.acj.spa.entity.Usuario;
+import com.acj.spa.repository.UsuarioRepository;
+import com.acj.spa.service.UsuarioService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +16,12 @@ import java.util.Collection;
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class MyUserDetailsService implements UserDetailsService {
-    @Autowired
-    private  UsuarioRepository usuarioRepository;
-    private  Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    private final UsuarioRepository usuarioRepository;
     @Autowired
     UsuarioService usuarioService;
-    @Autowired
-    PassWordRepository passwordRepository;
 
 
     @Autowired
@@ -35,33 +33,31 @@ public class MyUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)  {
         Usuario usuario = usuarioRepository.findByEmail(username);
         if(Objects.isNull(usuario)){
-            logger.info(String.format("Usuario  %s nao encontrado", username));
+            log.info("Usuário: " +username +" não encontrado.");
             throw  new RuntimeException("Usuário não encontrado");
         }
-        return new UsuarioRepositoryUsuarioDetails(usuario, usuarioService, logger);
+        return new UsuarioRepositoryUsuarioDetails(usuario, usuarioService);
     }
 
-    private final static class UsuarioRepositoryUsuarioDetails extends Usuario implements UserDetails{
+    private final static class UsuarioRepositoryUsuarioDetails extends Usuario implements UserDetails {
 
         private static final long serialVersionUID = 1L;
-
-        transient UsuarioService serviceUser;
-        private Logger logger;
+        transient UsuarioService usuarioService;
         private Usuario usuario;
 
 
         @Autowired
-        private UsuarioRepositoryUsuarioDetails(Usuario user, UsuarioService usuarioService, Logger logger) {
+        private UsuarioRepositoryUsuarioDetails(Usuario user, UsuarioService usuarioService) {
             super(user);
             this.usuario = user;
-            this.serviceUser = usuarioService;
-            this.logger = logger;
+            this.usuarioService = usuarioService;
         }
+
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            logger.info("Buscando permissoes...");
-            return serviceUser.finPermissionsByUser(usuario);
+            log.info("Buscando permissoes.");
+            return usuarioService.finPermissionsByUser(usuario);
         }
 
         @Override
@@ -89,12 +85,13 @@ public class MyUserDetailsService implements UserDetailsService {
 
         @Override
         public boolean isEnabled() {
-            return !getIsDeleted() && !serviceUser.finPermissionsByUser(usuario).isEmpty();
+            return !getIsDeleted() && !usuarioService.finPermissionsByUser(usuario).isEmpty();
         }
 
         @Override
         public String getPassword() {
-            return serviceUser.returnPassword(usuario.getId()).getPassword();
+            log.info("Verificando senha.");
+            return usuarioService.returnPassword(usuario.getId()).getPassword();
         }
     }
 }

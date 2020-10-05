@@ -1,4 +1,4 @@
-package br.com.se.entity.core.permissions;
+package com.acj.spa.entity;
 
 import org.springframework.security.core.GrantedAuthority;
 

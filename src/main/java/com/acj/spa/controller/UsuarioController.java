@@ -101,10 +101,10 @@ public class UsuarioController {
 
         return ResponseEntity.noContent().build();
     }
-    @PostMapping(value = "/resetPass")
-    public void updatePassword(@RequestBody PassWordDTO passWordDTO) {
-        usuarioService.updatePassword(passWordDTO);
-    }
+//    @PostMapping(value = "/resetPass")
+//    public void updatePassword(@RequestBody PassWordDTO passWordDTO) {
+//        usuarioService.updatePassword(passWordDTO);
+//    }
 
     @PostMapping(value = "/esqueceuSenha")
     public Usuario esqueceuSenha(@RequestBody EsqueceuSenhaDTO esqueceuSenhaDTO) {

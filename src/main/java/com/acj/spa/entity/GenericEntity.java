@@ -1,6 +1,6 @@
-package br.com.se.entity.core.generic;
+package com.acj.spa.entity;
 
-import br.com.se.config.annotations.NotIndex;
+import com.acj.spa.config.annotations.NotIndex;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,8 +33,6 @@ public abstract class GenericEntity {
     @LastModifiedBy
     private String lastModifiedUser;
 
-    @NotIndex
-    private String idUnidadeEmUso;
 
     private Boolean isDeleted;
 

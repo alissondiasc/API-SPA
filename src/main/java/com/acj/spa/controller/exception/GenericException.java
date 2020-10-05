@@ -1,4 +1,4 @@
-package br.com.se.exceptios;
+package com.acj.spa.controller.exception;
 
 import org.springframework.security.core.AuthenticationException;
 

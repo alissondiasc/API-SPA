@@ -1,72 +1,91 @@
-package br.com.se.config.initialize;
+package com.acj.spa.config.initialize;
 
-import br.com.se.entity.core.domains.GeneroDomain;
-import br.com.se.entity.core.permissions.Permission;
-import br.com.se.entity.core.permissions.Roles;
-import br.com.se.entity.core.permissions.TipoPerfil;
-import br.com.se.entity.core.usuario.Perfil;
-import br.com.se.entity.core.usuario.Usuario;
-import br.com.se.pathBase.administracao.AdministracaoPathBase;
-import br.com.se.pathBase.client.ClientPathBase;
-import br.com.se.repository.core.domains.GeneroRepository;
-import br.com.se.repository.core.permissoes.PerfilRepository;
-import br.com.se.repository.core.usuario.UsuarioRepository;
-import br.com.se.service.core.UsuarioService;
-import br.com.se.utils.enuns.GeneroEnum;
+import com.acj.spa.entity.Categoria;
+import com.acj.spa.entity.Perfil;
+import com.acj.spa.entity.Permission;
+import com.acj.spa.entity.Usuario;
+import com.acj.spa.enums.Roles;
+import com.acj.spa.enums.TipoPerfil;
+import com.acj.spa.repository.PerfilRepository;
+import com.acj.spa.service.CategoriaService;
+import com.acj.spa.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+
+import static java.util.Objects.isNull;
 
 @Component
 @RequiredArgsConstructor
 public class CargaInicial implements ApplicationListener<ContextRefreshedEvent> {
 
-
-    private final UsuarioRepository usuarioRepository;
-
     private final PerfilRepository perfilRepository;
 
     private final UsuarioService usuarioService;
 
-    private final GeneroRepository generoRepository;
+    private final CategoriaService categoriaService;
+
 
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent){
-        if(Objects.isNull(this.perfilRepository.findFirstBy())){
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        if (isNull(this.perfilRepository.findFirstBy())) {
             this.createPerfis();
         }
-        if(this.usuarioRepository.findAll().isEmpty()){
-            Usuario usuario = this.usuarioRepository.save(new Usuario("Alisson","alisson@email.com",this.addUserPerfil(Arrays.asList(TipoPerfil.ADMIN))));
+        if (isNull(this.usuarioService.obterUmUsuario())) {
+
+            Usuario usuario = this.usuarioService.salvar(Usuario.builder().nome("Admin").email("admin@email.com").perfils(this.addUserPerfil(Arrays.asList(TipoPerfil.ADMIN))).build());
             this.usuarioService.savePasswordToUserPadrao(usuario);
         }
-        if(Objects.isNull(this.generoRepository.findFirstBy())){
-            this.createDomains();
-        }
+        initCategorias();
     }
 
-    public void createPerfis(){
+    public void createPerfis() {
         this.perfilRepository.save(new Perfil(
                 "Administrador",
                 TipoPerfil.ADMIN,
-                new HashSet<Permission>(Arrays.asList(new Permission(Roles.ROLER_ADMIN.toString())))));
+                new HashSet<>(Arrays.asList(new Permission(Roles.ROLER_ADMIN.toString())))));
         this.perfilRepository.save(new Perfil(
                 "Cliente",
                 TipoPerfil.COMUN,
-                new HashSet<Permission>(Arrays.asList(
+                new HashSet<>(Arrays.asList(
                         new Permission(Roles.ROLER_CLIENTE.toString())))));
     }
 
-    public void createDomains(){
-        List<GeneroDomain>generoDomains = new ArrayList<GeneroDomain>(Arrays.asList(
-                new GeneroDomain(GeneroEnum.FEMININO.toString()),
-                new GeneroDomain(GeneroEnum.IGNORADO.toString()),
-                new GeneroDomain(GeneroEnum.MASCULINO.toString())));
-        this.generoRepository.saveAll(generoDomains);
+    public List<Perfil> addUserPerfil(List<TipoPerfil> tipoPerfils) {
+        return perfilRepository.findByTipoPerfilIn(tipoPerfils);
     }
-    public List<Perfil> addUserPerfil( List<TipoPerfil> tipoPerfils){
-       return perfilRepository.findByTipoPerfilIn(tipoPerfils);
+
+    private void initCategorias() {
+        if (!categoriaService.countCategorias()) {
+            List<Categoria> categorias = new ArrayList<>(
+                    Arrays.asList(
+            new Categoria("Jardinagem"),
+            new Categoria("Pintura"),
+            new Categoria("Mecânica"),
+            new Categoria("Contrução e reforma"),
+            new Categoria("Beleza"),
+            new Categoria("Comunicação"),
+            new Categoria("Educação"),
+            new Categoria("Eletrônica"),
+            new Categoria("Eventos"),
+            new Categoria("Gastronomia"),
+            new Categoria("Informática"),
+            new Categoria("Limpeza"),
+            new Categoria("Manutenções"),
+            new Categoria("Móveis"),
+            new Categoria("Proteção/Segurança"),
+            new Categoria("Saude"),
+            new Categoria("Serviçoo Doméstico"),
+            new Categoria("Trânsporte"),
+            new Categoria("Outros")
+            ));
+            categoriaService.salvarTodos(categorias);
+        }
     }
 }

@@ -39,6 +39,9 @@ public class CorsFilter implements Filter {
         Optional<String> headerOrigin = Optional.ofNullable(request.getHeader("Origin"));
 
         response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN");
 
         if (headerReferer.isPresent() && headerOrigin.isPresent()) {
             final String origin = headerOrigin.orElseThrow(() -> new ServletException("Origin não informada!"));

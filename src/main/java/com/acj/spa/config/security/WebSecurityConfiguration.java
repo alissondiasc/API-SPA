@@ -1,4 +1,4 @@
-package br.com.se.config.security;
+package com.acj.spa.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

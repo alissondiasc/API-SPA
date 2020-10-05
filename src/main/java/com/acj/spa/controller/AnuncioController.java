@@ -22,6 +22,7 @@ public class AnuncioController {
 
     @Autowired
     private AnuncioService anuncioService;
+
     @ApiOperation(value = "Cadastrar anuncio.")
     @PostMapping
     public ResponseEntity cadastrar(@RequestBody(required = false) AnuncioDTO anuncioDTO, Authentication authenticatioToken) {

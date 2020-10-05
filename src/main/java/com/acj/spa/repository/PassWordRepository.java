@@ -1,6 +1,6 @@
-package br.com.se.repository.core.security;
+package com.acj.spa.repository;
 
-import br.com.se.entity.core.security.Password;
+import com.acj.spa.entity.Password;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;

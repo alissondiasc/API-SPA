@@ -1,8 +1,6 @@
-package br.com.se.config.security;
+package com.acj.spa.config.security;
 
-import br.com.se.pathBase.administracao.AdministracaoPathBase;
-import br.com.se.pathBase.client.ClientPathBase;
-import br.com.se.pathBase.core.CorePathBase;
+import com.acj.spa.config.paths.CorePathBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +29,6 @@ public class OAuth2ServerConfiguration extends ResourceServerConfigurerAdapter {
                 .resourceId(RESOURCE_ID);
     }
     private static final String[] WHITELIST = {
-            // -- swagger ui
             "/swagger-resources/**",
             "/resources/**",
             "/swagger-ui.html",
@@ -42,7 +39,7 @@ public class OAuth2ServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity httpSecurity)throws Exception{
-        httpSecurity.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll();
+//        httpSecurity.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll();
         httpSecurity.httpBasic().and().authorizeRequests().antMatchers(HttpMethod.GET, CorePathBase.PUBLIC_PATH + "/**").permitAll();
         httpSecurity.logout()
                 .invalidateHttpSession(true)

@@ -2,7 +2,6 @@ package com.acj.spa;
 
 import com.acj.spa.entity.Categoria;
 import com.acj.spa.entity.Usuario;
-import com.acj.spa.enums.Perfil;
 import com.acj.spa.service.CategoriaService;
 import com.acj.spa.service.UsuarioService;
 import org.springframework.boot.CommandLineRunner;
@@ -17,30 +16,6 @@ public class SpaApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpaApplication.class, args);
 	}
-
-    @Bean
-    CommandLineRunner init(UsuarioService usuarioService, CategoriaService categoriaService) {
-        return args -> {
-            initUsers(usuarioService);
-            initCategorias(categoriaService);
-        };
-    }
-
-
-    private void initUsers(UsuarioService usuarioService) {
-        if (usuarioService.findByEmail("admin@email.com") == null) {
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            Usuario admin = new Usuario();
-            String senha = "Admin123";
-
-            admin.setNome("Admin");
-            admin.setEmail("admin@email.com");
-            admin.setSenha(passwordEncoder.encode(senha));
-            admin.setPerfil(Perfil.ROLE_ADMIN);
-
-            usuarioService.salvar(admin);
-        }
-    }
 
     private void initCategorias(CategoriaService categoriaService) {
 	    if(!categoriaService.countCategorias()) {

@@ -1,11 +1,8 @@
-package br.com.se.entity.core.security;
+package com.acj.spa.entity;
 
-
-import br.com.se.entity.core.generic.GenericEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.Objects;
 
 @Document

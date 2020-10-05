@@ -1,4 +1,4 @@
-package br.com.se.entity.core.permissions;
+package com.acj.spa.enums;
 
 public enum TipoPerfil {
     ADMIN, COMUN

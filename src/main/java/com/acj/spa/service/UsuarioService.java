@@ -1,26 +1,26 @@
 package com.acj.spa.service;
 
+import com.acj.spa.controller.exception.GenericException;
 import com.acj.spa.dto.EsqueceuSenhaDTO;
-import com.acj.spa.dto.PassWordDTO;
 import com.acj.spa.dto.UsuarioDTO;
 import com.acj.spa.dto.parser.UsuarioParser;
-import com.acj.spa.entity.Avaliacao;
-import com.acj.spa.entity.DadosProfissionais;
-import com.acj.spa.entity.Usuario;
-
+import com.acj.spa.entity.*;
 import com.acj.spa.repository.AnuncioRepository;
+import com.acj.spa.repository.PassWordRepository;
 import com.acj.spa.repository.UsuarioRepository;
-import com.acj.spa.config.security.UsuarioSecurity;
 import com.acj.spa.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +28,8 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PassWordRepository passwordRepository;
 
     @Autowired
     private AnuncioRepository anuncioRepository;
@@ -41,19 +43,54 @@ public class UsuarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public Usuario obterUsuarioLogado() {
-        UsuarioSecurity usuarioSecurity = (UsuarioSecurity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        return usuarioRepository.findByEmail(usuarioSecurity.getUsername());
+    public Password returnPassword(String id) {
+        Pageable pages = PageRequest.of(0, 5, Sort.Direction.ASC, "modified");
+        List<Password> passwords = passwordRepository.findByIdUser(id, pages).getContent();
+        if (passwords.isEmpty()) {
+            throw new GenericException("Usuario nao possui senha configurada");
+        }
+        return passwords.get(0);
+    }
+    public Usuario obterUmUsuario(){
+        return usuarioRepository.findFirstBy();
     }
 
-    public Usuario salvar(Usuario usuario) {
 
+    public Set<Permission> finPermissionsByUser(Usuario usuario){
+        if(Objects.nonNull(usuario.getPerfils()) && !usuario.getPerfils().isEmpty()){
+            return usuario
+                    .getPerfils()
+                    .stream()
+                    .filter(Objects::nonNull)
+                    .map(Perfil::getPermissions)
+                    .flatMap(Collection::stream).collect(Collectors.toSet());
+        }else {
+            throw new GenericException("Não permissão para este usuario");
+        }
+
+    }
+
+    public void savePasswordToUserPadrao(Usuario usuario) {
+        if (passwordRepository.findByIdUser(usuario.getId()).isEmpty()) {
+            Password password = new Password(usuario.getId(), passwordEncoder.encode("123456"), false);
+            passwordRepository.save(password);
+        }
+    }
+    public Usuario salvar(Usuario usuario) {
         return usuarioRepository.save(usuario);
+    }
+    public Usuario obterUsuarioLogado(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getPrincipal() instanceof UserDetails) {
+            String userName = ((UserDetails)authentication.getPrincipal()).getUsername();
+            return usuarioRepository.findByCpf(userName);
+        }
+        throw new GenericException("Erro ao retornar usuario");
+
     }
 
     public UsuarioDTO atualizar(UsuarioDTO usuarioDTO) {
-    	Usuario usuario = this.obterUsuarioLogado();
+    	Usuario usuario = new Usuario();
     	if(!Objects.isNull(usuarioDTO.getNome())) {
             usuario.setNome(usuarioDTO.getNome());
         }
@@ -104,15 +141,15 @@ public class UsuarioService {
 
         return usuarioRepository.save(usuarioDTO);
     }
-    public void updatePassword(PassWordDTO passWordDTO) {
-        Usuario usuario = obterUsuarioLogado();
-        if (passwordEncoder.matches(passWordDTO.getAntiga(),usuario.getSenha())) {
-            usuario.setSenha(encpritografarBcripty(passWordDTO.getNova()));
-            usuarioRepository.save(usuario);
-        } else {
-            throw new SecurityException("Senhas não conferem senha usuario:" +usuario.getSenha()+"senha antiga:" + passWordDTO.getAntiga());
-        }
-    }
+//    public void updatePassword(PassWordDTO passWordDTO) {
+//        Usuario usuario = obterUsuarioLogado();
+//        if (passwordEncoder.matches(passWordDTO.getAntiga(),usuario.getSenha())) {
+//            usuario.setSenha(encpritografarBcripty(passWordDTO.getNova()));
+//            usuarioRepository.save(usuario);
+//        } else {
+//            throw new SecurityException("Senhas não conferem senha usuario:" +usuario.getSenha()+"senha antiga:" + passWordDTO.getAntiga());
+//        }
+//    }
 
     public List<UsuarioDTO> buscarTodos() {
         List<Usuario> usuarios = usuarioRepository.findAll();
@@ -139,7 +176,7 @@ public class UsuarioService {
 	}
 
 	public Usuario inserirDadosProfissionais(DadosProfissionais dadosProfissionais) {
-        Usuario usuario = obterUsuarioLogado();
+        Usuario usuario = new Usuario();
         usuario.setDadosProfissionais(dadosProfissionaisService.salvar(dadosProfissionais));
 
         return usuarioRepository.save(usuario);
@@ -148,7 +185,7 @@ public class UsuarioService {
     public void adicionarAvaliacao(String id, Avaliacao avaliacao) {
 
         Usuario profissional = buscarPorId(avaliacao.getAnuncio().getProfissional().getId());
-        Usuario avaliador = obterUsuarioLogado();
+        Usuario avaliador = new Usuario();
         avaliacao.setUsuario(avaliador);
         profissional.getAvaliacoes().add(avaliacao);
 //        Anuncio anuncio = anuncioService.buscarPorId(avaliacao.getAnuncio().getId());

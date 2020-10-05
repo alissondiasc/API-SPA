@@ -1,9 +1,7 @@
-package br.com.se.entity.core.usuario;
+package com.acj.spa.entity;
 
-import br.com.se.entity.core.generic.GenericEntity;
-import br.com.se.entity.core.permissions.TipoPerfil;
-
-import br.com.se.entity.core.permissions.Permission;
+import com.acj.spa.enums.TipoPerfil;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,7 +12,8 @@ import java.util.Set;
 @Document
 @Getter
 @Setter
-public class Perfil extends GenericEntity implements Comparable<Perfil>{
+@Builder
+public class Perfil extends GenericEntity implements Comparable<Perfil> {
 
     private String nome;
 

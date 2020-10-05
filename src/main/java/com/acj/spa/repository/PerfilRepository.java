@@ -1,7 +1,7 @@
-package br.com.se.repository.core.permissoes;
+package com.acj.spa.repository;
 
-import br.com.se.entity.core.permissions.TipoPerfil;
-import br.com.se.entity.core.usuario.Perfil;
+import com.acj.spa.entity.Perfil;
+import com.acj.spa.enums.TipoPerfil;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
