@@ -1,10 +1,10 @@
-package com.acj.spa.controllers;
+package com.acj.spa.controller;
 
 
 
 
-import com.acj.spa.entities.Endereco;
-import com.acj.spa.services.EnderecoService;
+import com.acj.spa.entity.Endereco;
+import com.acj.spa.service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

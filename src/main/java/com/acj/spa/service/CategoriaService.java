@@ -1,8 +1,8 @@
-package com.acj.spa.services;
+package com.acj.spa.service;
 
 import com.acj.spa.dto.CategoriaDTO;
 import com.acj.spa.dto.parser.CategoriaParser;
-import com.acj.spa.entities.Categoria;
+import com.acj.spa.entity.Categoria;
 import com.acj.spa.repository.CategoriaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

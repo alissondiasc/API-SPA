@@ -1,8 +1,8 @@
 package com.acj.spa.dto.parser;
 
 import com.acj.spa.dto.DadosProfissionaisDTO;
-import com.acj.spa.entities.Categoria;
-import com.acj.spa.entities.DadosProfissionais;
+import com.acj.spa.entity.Categoria;
+import com.acj.spa.entity.DadosProfissionais;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.acj.spa.entities;
+package com.acj.spa.entity;
 
 import java.io.Serializable;
 

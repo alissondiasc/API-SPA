@@ -1,7 +1,7 @@
 package com.acj.spa.dto.parser;
 
 import com.acj.spa.dto.EnderecoDTO;
-import com.acj.spa.entities.Endereco;
+import com.acj.spa.entity.Endereco;
 
 public class EnderecoParser {
 

@@ -1,6 +1,5 @@
-package com.acj.spa.entities;
+package com.acj.spa.entity;
 
-import com.acj.spa.dto.UsuarioDTO;
 import com.acj.spa.enums.StatusAnuncio;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

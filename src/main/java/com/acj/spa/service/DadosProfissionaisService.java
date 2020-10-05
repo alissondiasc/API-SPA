@@ -1,6 +1,6 @@
-package com.acj.spa.services;
+package com.acj.spa.service;
 
-import com.acj.spa.entities.DadosProfissionais;
+import com.acj.spa.entity.DadosProfissionais;
 import com.acj.spa.repository.DadosProfissionaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

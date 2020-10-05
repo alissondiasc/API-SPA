@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.acj.spa.entities.Usuario;
+import com.acj.spa.entity.Usuario;
 import com.acj.spa.enums.StatusAnuncio;
 import lombok.*;
 

@@ -1,13 +1,13 @@
-package com.acj.spa.services;
+package com.acj.spa.service;
 
 import com.acj.spa.dto.*;
 import com.acj.spa.dto.parser.AnuncioParser;
-import com.acj.spa.entities.Anuncio;
-import com.acj.spa.entities.QAnuncio;
-import com.acj.spa.entities.Usuario;
+import com.acj.spa.entity.Anuncio;
+import com.acj.spa.entity.QAnuncio;
+import com.acj.spa.entity.Usuario;
 import com.acj.spa.enums.StatusAnuncio;
 import com.acj.spa.repository.AnuncioRepository;
-import com.acj.spa.services.exception.ObjectNotFoundException;
+import com.acj.spa.service.exception.ObjectNotFoundException;
 import com.acj.spa.util.CoreUtils;
 import com.acj.spa.util.ObjectMapperUtils;
 import com.querydsl.core.BooleanBuilder;

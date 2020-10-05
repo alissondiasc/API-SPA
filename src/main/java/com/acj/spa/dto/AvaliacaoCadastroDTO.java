@@ -1,7 +1,7 @@
 package com.acj.spa.dto;
 
-import com.acj.spa.entities.Anuncio;
-import com.acj.spa.entities.Usuario;
+import com.acj.spa.entity.Anuncio;
+import com.acj.spa.entity.Usuario;
 
 import java.io.Serializable;
 

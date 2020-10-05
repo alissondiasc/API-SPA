@@ -1,7 +1,7 @@
 package com.acj.spa.dto.parser;
 
 import com.acj.spa.dto.UsuarioDTO;
-import com.acj.spa.entities.Usuario;
+import com.acj.spa.entity.Usuario;
 
 public class UsuarioParser {
 

@@ -1,7 +1,7 @@
-package com.acj.spa.controllers;
+package com.acj.spa.controller;
 
-import com.acj.spa.entities.Categoria;
-import com.acj.spa.services.CategoriaService;
+import com.acj.spa.entity.Categoria;
+import com.acj.spa.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

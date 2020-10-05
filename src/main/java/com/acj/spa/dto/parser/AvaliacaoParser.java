@@ -1,7 +1,7 @@
 package com.acj.spa.dto.parser;
 
 import com.acj.spa.dto.AvaliacaoCadastroDTO;
-import com.acj.spa.entities.Avaliacao;
+import com.acj.spa.entity.Avaliacao;
 
 public class AvaliacaoParser {
 

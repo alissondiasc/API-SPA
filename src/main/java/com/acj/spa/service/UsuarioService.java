@@ -1,17 +1,17 @@
-package com.acj.spa.services;
+package com.acj.spa.service;
 
 import com.acj.spa.dto.EsqueceuSenhaDTO;
 import com.acj.spa.dto.PassWordDTO;
 import com.acj.spa.dto.UsuarioDTO;
 import com.acj.spa.dto.parser.UsuarioParser;
-import com.acj.spa.entities.Avaliacao;
-import com.acj.spa.entities.DadosProfissionais;
-import com.acj.spa.entities.Usuario;
+import com.acj.spa.entity.Avaliacao;
+import com.acj.spa.entity.DadosProfissionais;
+import com.acj.spa.entity.Usuario;
 
 import com.acj.spa.repository.AnuncioRepository;
 import com.acj.spa.repository.UsuarioRepository;
 import com.acj.spa.config.security.UsuarioSecurity;
-import com.acj.spa.services.exception.ObjectNotFoundException;
+import com.acj.spa.service.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

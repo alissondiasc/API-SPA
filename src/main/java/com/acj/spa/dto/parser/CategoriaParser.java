@@ -1,7 +1,7 @@
 package com.acj.spa.dto.parser;
 
 import com.acj.spa.dto.CategoriaDTO;
-import com.acj.spa.entities.Categoria;
+import com.acj.spa.entity.Categoria;
 
 public class CategoriaParser {
 

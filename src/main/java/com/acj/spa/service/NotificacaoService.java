@@ -1,7 +1,7 @@
-package com.acj.spa.services;
+package com.acj.spa.service;
 
-import com.acj.spa.entities.Anuncio;
-import com.acj.spa.entities.NotificacaoEntity;
+import com.acj.spa.entity.Anuncio;
+import com.acj.spa.entity.NotificacaoEntity;
 import com.acj.spa.repository.NotificacaoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

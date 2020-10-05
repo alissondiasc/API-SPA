@@ -1,10 +1,10 @@
-package com.acj.spa.controllers;
+package com.acj.spa.controller;
 import com.acj.spa.dto.*;
 import com.acj.spa.dto.parser.AvaliacaoParser;
 import com.acj.spa.dto.parser.DadosProfissionaisParser;
 import com.acj.spa.dto.parser.UsuarioParser;
-import com.acj.spa.entities.Usuario;
-import com.acj.spa.services.UsuarioService;
+import com.acj.spa.entity.Usuario;
+import com.acj.spa.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

@@ -1,4 +1,4 @@
-package com.acj.spa.services.exception;
+package com.acj.spa.service.exception;
 
 public class ObjectNotFoundException extends RuntimeException {
 

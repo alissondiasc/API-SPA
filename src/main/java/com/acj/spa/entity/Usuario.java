@@ -1,12 +1,10 @@
-package com.acj.spa.entities;
+package com.acj.spa.entity;
 
 import com.acj.spa.enums.Escolaridade;
 import com.acj.spa.enums.Perfil;
 import com.acj.spa.enums.Sexo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;

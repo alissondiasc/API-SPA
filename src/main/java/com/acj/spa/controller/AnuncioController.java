@@ -1,8 +1,9 @@
-package com.acj.spa.controllers;
+package com.acj.spa.controller;
 
 import com.acj.spa.dto.*;
-import com.acj.spa.services.AnuncioService;
+import com.acj.spa.service.AnuncioService;
 import com.acj.spa.util.ObjectMapperUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class AnuncioController {
 
     @Autowired
     private AnuncioService anuncioService;
-
+    @ApiOperation(value = "Cadastrar anuncio.")
     @PostMapping
     public ResponseEntity cadastrar(@RequestBody(required = false) AnuncioDTO anuncioDTO, Authentication authenticatioToken) {
         AnuncioDTO novoAnuncio = anuncioService.cadastrar(anuncioDTO, authenticatioToken.getName());

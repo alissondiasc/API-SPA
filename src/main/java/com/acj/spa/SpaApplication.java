@@ -1,18 +1,15 @@
 package com.acj.spa;
 
-import com.acj.spa.entities.Categoria;
-import com.acj.spa.entities.Usuario;
+import com.acj.spa.entity.Categoria;
+import com.acj.spa.entity.Usuario;
 import com.acj.spa.enums.Perfil;
-import com.acj.spa.services.CategoriaService;
-import com.acj.spa.services.UsuarioService;
+import com.acj.spa.service.CategoriaService;
+import com.acj.spa.service.UsuarioService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.security.SecureRandom;
 
 @SpringBootApplication
 public class SpaApplication {

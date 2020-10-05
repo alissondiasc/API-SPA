@@ -1,6 +1,6 @@
-package com.acj.spa.controllers.exception;
+package com.acj.spa.controller.exception;
 
-import com.acj.spa.services.exception.ObjectNotFoundException;
+import com.acj.spa.service.exception.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

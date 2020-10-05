@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
-import com.acj.spa.entities.Anuncio;
-import com.acj.spa.entities.Usuario;
+import com.acj.spa.entity.Anuncio;
+import com.acj.spa.entity.Usuario;
 
 
 public interface AnuncioRepository extends MongoRepository<Anuncio, String>, QuerydslPredicateExecutor<Anuncio> {

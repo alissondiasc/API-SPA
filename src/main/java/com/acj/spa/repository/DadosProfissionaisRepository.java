@@ -1,6 +1,6 @@
 package com.acj.spa.repository;
 
-import com.acj.spa.entities.DadosProfissionais;
+import com.acj.spa.entity.DadosProfissionais;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

@@ -4,9 +4,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-import com.acj.spa.entities.Avaliacao;
-import com.acj.spa.entities.DadosProfissionais;
-import com.acj.spa.entities.Endereco;
+import com.acj.spa.entity.Avaliacao;
+import com.acj.spa.entity.DadosProfissionais;
+import com.acj.spa.entity.Endereco;
 import com.acj.spa.enums.Escolaridade;
 import com.acj.spa.enums.Sexo;
 

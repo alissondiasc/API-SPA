@@ -1,6 +1,6 @@
 package com.acj.spa.repository;
 
-import com.acj.spa.entities.NotificacaoEntity;
+import com.acj.spa.entity.NotificacaoEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

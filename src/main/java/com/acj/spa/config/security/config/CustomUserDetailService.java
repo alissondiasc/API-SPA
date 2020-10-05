@@ -1,6 +1,6 @@
 package com.acj.spa.config.security.config;
 
-import com.acj.spa.entities.Usuario;
+import com.acj.spa.entity.Usuario;
 import com.acj.spa.repository.UsuarioRepository;
 import com.acj.spa.config.security.UsuarioSecurity;
 import org.springframework.beans.factory.annotation.Autowired;

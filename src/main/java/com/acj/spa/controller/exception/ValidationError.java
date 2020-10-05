@@ -1,4 +1,4 @@
-package com.acj.spa.controllers.exception;
+package com.acj.spa.controller.exception;
 
 import java.util.ArrayList;
 import java.util.List;
