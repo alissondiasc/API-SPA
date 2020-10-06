@@ -69,7 +69,9 @@ public class AnuncioService {
         Pageable pageable = PageRequest.of(filtroAnunciosDTO.getPage(), filtroAnunciosDTO.getCont(), filtroAnunciosDTO.getOrderBy(), "dataHora");
         BooleanBuilder builder = new BooleanBuilder();
         builder.and(qAnuncio.isDeleted.eq(false));
-        builder.and(qAnuncio.usuario.id.notIn(usuarioLogado.getId()));
+        if(Objects.nonNull(usuarioLogado)){
+            builder.and(qAnuncio.usuario.id.notIn(usuarioLogado.getId()));
+        }
 
         if (!StringUtils.isEmpty(filtroAnunciosDTO.getDescricao())) {
             builder

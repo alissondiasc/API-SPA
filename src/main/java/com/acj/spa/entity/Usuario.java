@@ -5,7 +5,6 @@ import com.acj.spa.enums.Sexo;
 import com.acj.spa.enums.TipoPerfil;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Builder
 public class Usuario  extends GenericEntity implements Serializable  {
+
     private String nome;
     @Indexed(unique = true)
     private String email;

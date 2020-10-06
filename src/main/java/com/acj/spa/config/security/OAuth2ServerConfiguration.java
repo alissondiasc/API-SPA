@@ -34,13 +34,13 @@ public class OAuth2ServerConfiguration extends ResourceServerConfigurerAdapter {
             "/swagger-ui.html",
             "/v2/api-docs",
             "/webjars/**",
+            "/public/**",
             "/system-logout/**"
     };
 
     @Override
     public void configure(HttpSecurity httpSecurity)throws Exception{
-//        httpSecurity.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll();
-        httpSecurity.httpBasic().and().authorizeRequests().antMatchers(HttpMethod.GET, CorePathBase.PUBLIC_PATH + "/**").permitAll();
+//        httpSecurity.httpBasic().and().authorizeRequests().antMatchers(HttpMethod.GET, CorePathBase.PUBLIC_PATH + "/**").permitAll();
         httpSecurity.logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
@@ -76,6 +76,7 @@ public class OAuth2ServerConfiguration extends ResourceServerConfigurerAdapter {
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
+
             endpoints
                     .tokenStore(this.tokenStore)
                     .authenticationManager(this.authenticationManager);

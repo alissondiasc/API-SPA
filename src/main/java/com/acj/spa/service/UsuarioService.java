@@ -1,5 +1,6 @@
 package com.acj.spa.service;
 
+import com.acj.spa.config.security.MyUserDetailsService;
 import com.acj.spa.controller.exception.GenericException;
 import com.acj.spa.dto.EsqueceuSenhaDTO;
 import com.acj.spa.dto.UsuarioDTO;
@@ -79,11 +80,18 @@ public class UsuarioService {
     public Usuario salvar(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
+
     public Usuario obterUsuarioLogado(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(!authentication.isAuthenticated()){
+            return null;
+        }
         if (authentication.getPrincipal() instanceof UserDetails) {
-            String userName = ((UserDetails)authentication.getPrincipal()).getUsername();
-            return usuarioRepository.findByCpf(userName);
+            Usuario user = ((MyUserDetailsService.UsuarioRepositoryUsuarioDetails)authentication.getPrincipal()).obterUsuarioLogado();
+            return user;
+        }
+        if (authentication.getPrincipal() instanceof String) {
+           return null;
         }
         throw new GenericException("Erro ao retornar usuario");
 

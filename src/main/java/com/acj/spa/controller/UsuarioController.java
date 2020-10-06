@@ -5,6 +5,7 @@ import com.acj.spa.dto.parser.DadosProfissionaisParser;
 import com.acj.spa.dto.parser.UsuarioParser;
 import com.acj.spa.entity.Usuario;
 import com.acj.spa.service.UsuarioService;
+import com.acj.spa.util.ObjectMapperUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -89,8 +90,7 @@ public class UsuarioController {
 
     @GetMapping(value = "protected")
     public UsuarioDTO usuarioPorId(Authentication authenticatio) {
-        UsuarioDTO usuarioDTO = usuarioService.buscarPorEmail(authenticatio.getName());
-        return usuarioDTO;
+        return ObjectMapperUtils.map(usuarioService.obterUsuarioLogado(), UsuarioDTO.class) ;
     }
 
     @PostMapping(value = "{id}/avaliar")

@@ -39,7 +39,7 @@ public class MyUserDetailsService implements UserDetailsService {
         return new UsuarioRepositoryUsuarioDetails(usuario, usuarioService);
     }
 
-    private final static class UsuarioRepositoryUsuarioDetails extends Usuario implements UserDetails {
+    public final static class UsuarioRepositoryUsuarioDetails extends Usuario implements UserDetails {
 
         private static final long serialVersionUID = 1L;
         transient UsuarioService usuarioService;
@@ -52,12 +52,18 @@ public class MyUserDetailsService implements UserDetailsService {
             this.usuario = user;
             this.usuarioService = usuarioService;
         }
+        public Usuario obterUsuarioLogado(){
+            return this.usuario;
+        }
 
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
             log.info("Buscando permissoes.");
             return usuarioService.finPermissionsByUser(usuario);
+        }
+        public Usuario obterUsuario(){
+            return this.usuario;
         }
 
         @Override

@@ -1,5 +1,6 @@
 package com.acj.spa.controller;
 
+import com.acj.spa.config.paths.CorePathBase;
 import com.acj.spa.dto.*;
 import com.acj.spa.service.AnuncioService;
 import com.acj.spa.util.ObjectMapperUtils;
@@ -8,16 +9,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.management.relation.Role;
 import java.util.List;
 
 @Slf4j
 @RestController
 @SuppressWarnings("java:S4834")
-@RequestMapping("protected/anuncios")
+@RequestMapping(CorePathBase.PUBLIC_PATH+"/anuncios")
 public class AnuncioController {
 
     @Autowired
@@ -46,7 +49,7 @@ public class AnuncioController {
     public ResponseEntity<List<AnuncioRegistrosDTO>> obterMeusAnuncios(Authentication authenticatioToken) {
         return new ResponseEntity<>(anuncioService.listarMeusAnuncios(authenticatioToken.getName()), HttpStatus.OK);
     }
-
+    @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/obter-anuncios")
     public ResponseEntity<ListPageDTO> obterAnuncios(@RequestBody FiltroAnunciosDTO filtroAnunciosDTO) {
         return ResponseEntity.ok(anuncioService.filtrarAnuncios(filtroAnunciosDTO));
