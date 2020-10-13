@@ -45,7 +45,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring()
                 .antMatchers(HttpMethod.OPTIONS, "/**")
-                .antMatchers("/api/public/**");
+                .antMatchers("/api/public/**")
+                .antMatchers("/api/websocket/**");
 
     }
 

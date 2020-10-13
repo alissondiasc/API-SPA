@@ -25,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -37,29 +38,25 @@ public class AnuncioService {
     @Autowired
     private NotificacaoService notificacaoService;
 
-    public AnuncioDTO cadastrar(AnuncioDTO anuncioDTO, String email) {
-        anuncioDTO.setCategoria(CategoriaDTO.builder().id(anuncioDTO.getCategoria().getId()).build());
-        anuncioDTO.setAnunciante(usuarioService.buscarPorEmail(email));
-        LocalDateTime agora = LocalDateTime.now();
-        agora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
-        anuncioDTO.setDataHora(agora);
+    public String cadastrar(AnuncioDTO anuncioDTO) {
+        try {
+            anuncioDTO.setCategoria(CategoriaDTO.builder().id(anuncioDTO.getCategoria().getId()).build());
+            LocalDateTime agora = LocalDateTime.now();
+            agora.format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+            anuncioDTO.setDataHora(agora);
+            Anuncio anuncio = ObjectMapperUtils.map(anuncioDTO, Anuncio.class);
+            anuncio.setUsuario(usuarioService.obterUsuarioLogado());
+            anuncioRepository.save(anuncio);
+            return "Anuncio cadastrado com sucesso.";
+        }catch (Exception  e){
+            return e.getMessage();
+        }
 
-        return AnuncioParser.toDTO(anuncioRepository.save(AnuncioParser.toEntity(anuncioDTO)));
+
     }
 
-//    public List<AnuncioDTO> buscarTodos() {
-//        List<Anuncio> anuncios = anuncioRepository.findByOrderByDataHoraDesc();
-//        return anuncios.stream().map(AnuncioParser::toDTO).collect(Collectors.toList());
-//    }
-
-//    public Page<Anuncio> buscarTodosPaginadoOrdenadoHora(Integer page, Integer size) {
-//        Pageable pages = new PageRequest(page, size);
-//        return anuncioRepository.findByStatusOrderByDataHoraDesc(StatusAnuncio.NOVO, pages);
-//    }
-
-    public List<AnuncioRegistrosDTO> listarMeusAnuncios(String idUsuario) {
-        Usuario usuario = usuarioService.obterUsuarioLogado();
-        List<Anuncio> anuncios = anuncioRepository.findByUsuarioAndIsDeletedFalseOrderByDataHoraDesc(usuario);
+    public List<AnuncioRegistrosDTO> listarMeusAnuncios() {
+        List<Anuncio> anuncios = anuncioRepository.findByUsuarioAndIsDeletedFalseOrderByDataHoraDesc(usuarioService.obterUsuarioLogado());
         return ObjectMapperUtils.mapAll(anuncios, AnuncioRegistrosDTO.class);
     }
 
@@ -127,36 +124,20 @@ public class AnuncioService {
         }
     }
 
-    public void deletarMeuAnuncio(String anuncioId, String usuarioId) {
-        Anuncio anuncio = buscarPorId(anuncioId);
-        if (anuncio.getUsuario().getEmail().equals(usuarioId)) {
-            anuncioRepository.delete(anuncio);
-        } else {
-            throw new DataIntegrityViolationException("Usuario não é dono do anuncio");
-        }
-
+    public void deletarMeuAnuncio(String anuncioId) {
+        this.anuncioRepository.deleteById(anuncioId);
     }
 
 
     public boolean candidaturaValida(Usuario usuario, Anuncio anuncio) {
-        boolean candidaturaValida = false;
-
         if (usuario.getId().equals(anuncio.getUsuario().getId())) {
-            candidaturaValida = false;
+            return Boolean.FALSE;
         } else {
-            List<Usuario> candidatos;
-            if (anuncio.getCandidatos() != null) {
-                candidatos = anuncio.getCandidatos();
-                if (candidatos.contains(usuario)) {
-                    candidaturaValida = false;
-                } else {
-                    candidaturaValida = true;
-                }
-            } else {
-                candidaturaValida = true;
+            if (anuncio.getCandidatos().stream().filter(user -> user.getId().equals(usuario.getId())).collect(Collectors.toList()).isEmpty()) {
+                return Boolean.TRUE;
             }
         }
-        return candidaturaValida;
+        return Boolean.FALSE;
     }
 
     public void escolherCandidato(String idAnuncio, String idUsuario) {

@@ -1,6 +1,7 @@
 package com.acj.spa.entity;
 
 import com.acj.spa.enums.StatusAnuncio;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value="AnuncioModel", description="Modelo de amostra para a documentação")
 public class Anuncio implements Serializable {
 
     @Id
@@ -41,6 +43,7 @@ public class Anuncio implements Serializable {
 
     @DBRef
     private List<Usuario> candidatos;
+
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
     }

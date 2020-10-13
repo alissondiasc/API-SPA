@@ -31,6 +31,7 @@ public class OAuth2ServerConfiguration extends ResourceServerConfigurerAdapter {
     private static final String[] WHITELIST = {
             "/swagger-resources/**",
             "/resources/**",
+            "/websocket/**",
             "/swagger-ui.html",
             "/v2/api-docs",
             "/webjars/**",
@@ -40,7 +41,6 @@ public class OAuth2ServerConfiguration extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity httpSecurity)throws Exception{
-//        httpSecurity.httpBasic().and().authorizeRequests().antMatchers(HttpMethod.GET, CorePathBase.PUBLIC_PATH + "/**").permitAll();
         httpSecurity.logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
