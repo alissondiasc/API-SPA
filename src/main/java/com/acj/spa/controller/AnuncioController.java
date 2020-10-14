@@ -25,7 +25,7 @@ public class AnuncioController {
 
     @ApiOperation(value = "Cadastrar anuncio")
     @PreAuthorize("isAuthenticated()")
-    @PostMapping
+    @PostMapping(value = "cadastrar")
     public ResponseEntity<String> cadastrar(@RequestBody(required = true) final AnuncioDTO anuncioDTO) {
         return ResponseEntity.ok(anuncioService.cadastrar(anuncioDTO));
     }
@@ -53,7 +53,6 @@ public class AnuncioController {
     }
 
     @ApiOperation(value = "Obter todos anuncios com filtro.")
-    @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/obter-anuncios")
     public ResponseEntity<ListPageDTO> obterAnuncios(@RequestBody FiltroAnunciosDTO filtroAnunciosDTO) {
         return ResponseEntity.ok(anuncioService.filtrarAnuncios(filtroAnunciosDTO));

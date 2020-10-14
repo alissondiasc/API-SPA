@@ -16,14 +16,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfig  extends WebMvcConfigurationSupport {
 //    @Bean
-//    public Docket greetingApi() {
+//    public Docket api() {
 //        return new Docket(DocumentationType.SWAGGER_2)
 //                .select()
-//                .apis(RequestHandlerSelectors.basePackage("com.acj.spa.config.swagger"))
-//                .build()
-//                .pathMapping("/")
-//                .apiInfo(metaData());
-//
+//                .apis(RequestHandlerSelectors.any())
+//                .paths(PathSelectors.any())
+//                .build();
 //    }
 @Bean
 public Docket apiDocket() {
@@ -31,18 +29,16 @@ public Docket apiDocket() {
     return new Docket(DocumentationType.SWAGGER_2)
             .apiInfo(metaData())
             .select()
-            .apis(RequestHandlerSelectors.basePackage("com.acj.spa.controllers"))
+            .apis(RequestHandlerSelectors.basePackage("com.acj.spa.controller"))
             .paths(PathSelectors.any())
             .build();
 }
 
     private ApiInfo metaData() {
         return new ApiInfoBuilder()
-                .title("Spring Boot REST API")
-                .description("\"Spring Boot REST API for greeting people\"")
+                .title("SPA - API")
+                .description("\"Sistema de prestação e contratação de serviços\"")
                 .version("1.0.0")
-                .license("Apache License Version 2.0")
-                .licenseUrl("https://www.apache.org/licenses/LICENSE-2.0\"")
                 .build();
     }
 
