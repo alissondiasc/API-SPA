@@ -88,13 +88,14 @@ public class UsuarioService {
         }
         if (authentication.getPrincipal() instanceof UserDetails) {
             Usuario user = ((MyUserDetailsService.UsuarioRepositoryUsuarioDetails)authentication.getPrincipal()).obterUsuarioLogado();
-            return user;
+            if(Objects.nonNull(user)){
+                return user;
+            }
         }
         if (authentication.getPrincipal() instanceof String) {
            return null;
         }
-        throw new GenericException("Erro ao retornar usuario");
-
+        return null;
     }
 
     public UsuarioDTO atualizar(UsuarioDTO usuarioDTO) {
