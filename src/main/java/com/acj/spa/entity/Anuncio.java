@@ -10,8 +10,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Document
@@ -20,46 +23,30 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value="AnuncioModel", description="Modelo de amostra para a documentação")
-public class Anuncio implements Serializable {
+public class Anuncio extends GenericEntity implements Serializable {
 
-    @Id
-    private String id;
+    private static final long serialVersionUID = 1L;
+    @NotBlank(message = "${tituloanuncio..not.blank}")
     private String titulo;
     private String descricao;
-    private LocalDateTime dataHora;
     private StatusAnuncio status = StatusAnuncio.NOVO;
-    private String localidade ;
+    @NotBlank(message = "${localidade.anuncio.not.blank}")
+    private String localidade;
+    @NotBlank(message = "${bairro.anuncio.not.blank}")
     private String bairro;
-    private Boolean isDeleted = false;
-
+    @NotNull(message = "${categoria.anuncio.not.null}")
     @DBRef
     private Categoria categoria;
 
     @DBRef
-    private Usuario usuario;
+    @NotNull(message = "${usuario.anuncio.not.null}")
+    private Usuario anunciante;
 
     @DBRef
-    private Usuario profissional;
+    private Usuario profissionalContratado;
 
     @DBRef
     private List<Usuario> candidatos;
-
-    public void setDeleted(Boolean deleted) {
-        isDeleted = deleted;
-    }
-
-    public Anuncio(String id, String titulo, String descricao, Categoria categoria, Usuario usuario, LocalDateTime dataHora, List<Usuario> candidatos, Usuario profissional,String localidade,String bairro ) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.dataHora = dataHora;
-        this.bairro = bairro;
-        this.categoria = categoria;
-        this.usuario = usuario;
-        this.profissional = profissional;
-        this.candidatos = candidatos;
-        this.localidade = localidade;
-    }
 
 
     @Override

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -26,7 +27,7 @@ public class AnuncioController {
     @ApiOperation(value = "Cadastrar anuncio")
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "cadastrar")
-    public ResponseEntity<String> cadastrar(@RequestBody(required = true) final AnuncioDTO anuncioDTO) {
+    public ResponseEntity<String> cadastrar(@RequestBody @Valid final AnuncioDTO anuncioDTO) {
         return ResponseEntity.ok(anuncioService.cadastrar(anuncioDTO));
     }
 

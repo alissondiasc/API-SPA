@@ -193,15 +193,15 @@ public class UsuarioService {
 
     public void adicionarAvaliacao(String id, Avaliacao avaliacao) {
 
-        Usuario profissional = buscarPorId(avaliacao.getAnuncio().getProfissional().getId());
-        Usuario avaliador = new Usuario();
-        avaliacao.setUsuario(avaliador);
-        profissional.getAvaliacoes().add(avaliacao);
-//        Anuncio anuncio = anuncioService.buscarPorId(avaliacao.getAnuncio().getId());
-//        anuncio.setStatus(StatusAnuncio.ENCERRADO);
-//        anuncioRepository.save(anuncio);
-
-        usuarioRepository.save(profissional);
+//        Usuario profissional = buscarPorId(avaliacao.getAnuncio().getProfissional().getId());
+//        Usuario avaliador = new Usuario();
+//        avaliacao.setUsuario(avaliador);
+//        profissional.getAvaliacoes().add(avaliacao);
+////        Anuncio anuncio = anuncioService.buscarPorId(avaliacao.getAnuncio().getId());
+////        anuncio.setStatus(StatusAnuncio.ENCERRADO);
+////        anuncioRepository.save(anuncio);
+//
+//        usuarioRepository.save(profissional);
     }
 
     public Usuario esqueceuSenha(EsqueceuSenhaDTO esqueceuSenhaDTO){

@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.acj.spa.util.template.MessageLoader.getMessage;
+
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandardError> validacao(MethodArgumentNotValidException e, HttpServletRequest request) {
 
-        ValidationError error = new ValidationError(HttpStatus.BAD_REQUEST.toString(), "Erro de validação", System.currentTimeMillis());
+        ValidationError error = new ValidationError(HttpStatus.BAD_REQUEST.toString(), getMessage("api.campos.invalidos"), System.currentTimeMillis());
 
         for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
             error.addErro(fieldError.getField(), fieldError.getDefaultMessage());

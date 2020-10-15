@@ -18,7 +18,7 @@ public interface AnuncioRepository extends MongoRepository<Anuncio, String>, Que
 
 	Page<Anuncio> findByTituloLikeIgnoreCaseOrderByDataHoraDesc(String titulo, Pageable pageable);
 
-	List<Anuncio> findByUsuarioAndIsDeletedFalseOrderByDataHoraDesc(Usuario usuario);
+	List<Anuncio> findByAnuncianteAndIsDeletedFalseOrderByDataHoraDesc(Usuario usuario);
 
     Page<Anuncio> findByStatusOrderByDataHoraDesc(StatusAnuncio novo, Pageable pageRequest);
 }

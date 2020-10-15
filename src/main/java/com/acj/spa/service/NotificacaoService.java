@@ -22,9 +22,9 @@ public class NotificacaoService {
 
     public void criarNotificacaoDeCandidade(Anuncio anuncio) {
         NotificacaoEntity notificacao =  new NotificacaoEntity
-                (anuncio.getUsuario().getId(),"Você tem um novo candidato!",anuncio.getUsuario().getNome()+" tem interesse em sua opotunidade");
+                (anuncio.getAnunciante().getId(),"Você tem um novo candidato!",anuncio.getAnunciante().getNome()+" tem interesse em sua opotunidade");
         notificacaoRepository.save(notificacao);
-        simpMessagingTemplate.convertAndSend("/websocket/notificacao/new/"+anuncio.getUsuario().getId(), obterNotificacoesNaoLidas(anuncio.getUsuario().getId()).size());
+        simpMessagingTemplate.convertAndSend("/websocket/notificacao/new/"+anuncio.getAnunciante().getId(), obterNotificacoesNaoLidas(anuncio.getAnunciante().getId()).size());
     }
 
 }

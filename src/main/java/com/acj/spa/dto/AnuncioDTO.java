@@ -1,44 +1,39 @@
 package com.acj.spa.dto;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
-
 import com.acj.spa.entity.Usuario;
 import com.acj.spa.enums.StatusAnuncio;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
+import java.util.List;
 
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnuncioDTO implements Serializable {
-    @NonNull
-    @NotEmpty
+public class AnuncioDTO {
+
     private String id;
-    @NonNull
-    @NotEmpty
-    @Size(min = 2, max = 50, message = "teste")
+    @NotBlank(message = "${titulo.anuncio.not.blank}")
+    @Size(min = 2, max = 50, message = "${titulo.anuncio.size}")
     private String titulo;
     @NonNull
-    @NotEmpty
-    @Size(min = 1, message = "teste")
+    @NotBlank
+    @Size(min = 2, max = 800, message = "${descricao.anuncio.size}")
     private String descricao;
-    @NonNull
-    private UsuarioDTO anunciante;
-    @NonNull
-    private CategoriaDTO categoria;
-    private LocalDateTime dataHora;
-    private List<Usuario> candidatos;
     private StatusAnuncio statusAnuncio;
-    private Usuario profissional;
-    @NonNull
-    @NotEmpty
-    private String localidade;
-    @NonNull
-    @NotEmpty
-    private String bairro;
+    @NotNull
+    private UsuarioSimplificadoDTO anunciante;
+    @NotNull
+    private CategoriaDTO categoria;
+    private List<Usuario> candidatos;
+    private UsuarioSimplificadoDTO profissional;
+
+    private float latitude;
+    private float longitude;
+
 }
