@@ -26,7 +26,8 @@ import java.util.List;
 public class Anuncio extends GenericEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @NotBlank(message = "${tituloanuncio..not.blank}")
+
+    @NotBlank(message = "${titulo.anuncio.not.blank}")
     private String titulo;
     private String descricao;
     private StatusAnuncio status = StatusAnuncio.NOVO;
